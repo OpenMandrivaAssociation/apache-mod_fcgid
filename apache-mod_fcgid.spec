@@ -5,8 +5,8 @@
 
 Summary:	Mod_fcgid is a apache module for FastCGI
 Name:		apache-%{mod_name}
-Version:	2.0
-Release:	%mkrel 2
+Version:	2.1
+Release:	%mkrel 1
 Group:		System/Servers
 License:	GPL
 URL:		http://fastcgi.coremail.cn/
@@ -23,8 +23,6 @@ Requires(pre):	apache >= 2.2.0
 Requires:	apache-conf >= 2.2.0
 Requires:	apache >= 2.2.0
 BuildRequires:	apache-devel >= 2.2.0
-Provides:	apache2-mod_fcgid
-Obsoletes:	apache2-mod_fcgid
 Epoch:		1
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -96,6 +94,3 @@ fi
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/%{mod_conf}
 %attr(0755,root,root) %{_libdir}/apache-extramodules/%{mod_so}
 %attr(0755,apache,apache) %dir %{_localstatedir}/%{name}
-
-
-
