@@ -3,7 +3,7 @@
 %define mod_conf A27_%{mod_name}.conf
 %define mod_so %{mod_name}.so
 
-Summary:	Mod_fcgid is a apache module for FastCGI
+Summary:	Apache module for FastCGI
 Name:		apache-%{mod_name}
 Version:	2.2
 Release:	%mkrel 1
