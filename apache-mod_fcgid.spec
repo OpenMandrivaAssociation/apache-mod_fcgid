@@ -6,7 +6,7 @@
 Summary:	Apache module for FastCGI
 Name:		apache-%{mod_name}
 Version:	2.2
-Release:	%mkrel 3
+Release:	%mkrel 4
 Group:		System/Servers
 License:	GPL
 URL:		http://fastcgi.coremail.cn/
