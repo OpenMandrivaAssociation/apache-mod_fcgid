@@ -68,7 +68,7 @@ arch/unix/fcgid_proctbl_unix.c arch/unix/fcgid_pm_unix.c arch/unix/fcgid_proc_un
 
 install -d %{buildroot}%{_libdir}/apache-extramodules
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
-install -d %{buildroot}%{_localstatedir}/lib/%{name}
+install -d %{buildroot}/var/lib/%{name}
 
 install -m0755 .libs/*.so %{buildroot}%{_libdir}/apache-extramodules/
 install -m0644 %{mod_conf} %{buildroot}%{_sysconfdir}/httpd/modules.d/%{mod_conf}
@@ -93,4 +93,4 @@ fi
 %doc AUTHOR COPYING ChangeLog INSTALL.txt configuration.htm directives.htm
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/%{mod_conf}
 %attr(0755,root,root) %{_libdir}/apache-extramodules/%{mod_so}
-%attr(0755,apache,apache) %dir %{_localstatedir}/lib/%{name}
+%attr(0755,apache,apache) %dir /var/lib/%{name}
