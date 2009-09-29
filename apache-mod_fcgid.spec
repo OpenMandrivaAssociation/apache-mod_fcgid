@@ -5,13 +5,13 @@
 
 Summary:	Apache module for FastCGI
 Name:		apache-%{mod_name}
-Version:	2.3.1
+Version:	2.3.2
 Release:	%mkrel 0.1
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.apache.org
-Source0:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-2.3.1.tar.gz
-Source1:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-2.3.1.tar.gz.asc
+Source0:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-2.3.2.tar.gz
+Source1:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-2.3.2.tar.gz.asc
 Source2:	%{mod_conf}
 BuildRequires:	file
 Requires(pre): rpm-helper
