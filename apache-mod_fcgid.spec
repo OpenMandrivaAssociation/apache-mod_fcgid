@@ -5,13 +5,13 @@
 
 Summary:	Apache module for FastCGI
 Name:		apache-%{mod_name}
-Version:	2.3.2
+Version:	2.3.5
 Release:	%mkrel 0.1
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.apache.org
-Source0:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-2.3.2.tar.gz
-Source1:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-2.3.2.tar.gz.asc
+Source0:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-%{version}.tar.gz
+Source1:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-%{version}.tar.gz.asc
 Source2:	%{mod_conf}
 BuildRequires:	file
 Requires(pre): rpm-helper
@@ -47,8 +47,8 @@ find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 pushd modules/fcgid
 cp fcgid_config.h.in fcgid_config.h
 %{_sbindir}/apxs -I. -c mod_fcgid.c fcgid_bridge.c fcgid_conf.c fcgid_pm_main.c \
-    fcgid_protocol.c fcgid_spawn_ctl.c  fcgid_proctbl_unix.c fcgid_pm_unix.c \
-    fcgid_proc_unix.c fcgid_bucket.c fcgid_filter.c
+    fcgid_protocol.c fcgid_spawn_ctl.c fcgid_proctbl_unix.c fcgid_pm_unix.c \
+    fcgid_proc_unix.c fcgid_bucket.c fcgid_filter.c fcgid_mutex_unix.c
 popd
 
 %install
