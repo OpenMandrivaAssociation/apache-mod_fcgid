@@ -6,7 +6,7 @@
 Summary:	Apache module for FastCGI
 Name:		apache-%{mod_name}
 Version:	2.3.6
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.apache.org
