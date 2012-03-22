@@ -53,8 +53,6 @@ install -d %{buildroot}/var/lib/%{name}
 
 install -m0755 modules/fcgid/.libs/*.so %{buildroot}%{_libdir}/apache/
 
-install -m0644 %{mod_conf} 
-
 cat > %{buildroot}%{_sysconfdir}/httpd/modules.d/%{load_order}_%{mod_name}.conf << EOF
 LoadModule fcgid_module	%{_libdir}/apache/%{mod_name}.so
 
