@@ -40,7 +40,7 @@ find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 
 pushd modules/fcgid
 cp fcgid_config.h.in fcgid_config.h
-%{_sbindir}/apxs -I. -c mod_fcgid.c fcgid_bridge.c fcgid_conf.c fcgid_pm_main.c \
+%{_bindir}/apxs -I. -c mod_fcgid.c fcgid_bridge.c fcgid_conf.c fcgid_pm_main.c \
     fcgid_protocol.c fcgid_spawn_ctl.c fcgid_proctbl_unix.c fcgid_pm_unix.c \
     fcgid_proc_unix.c fcgid_bucket.c fcgid_filter.c fcgid_mutex_unix.c
 popd
