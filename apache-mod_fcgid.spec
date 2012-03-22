@@ -1,28 +1,23 @@
 #Module-Specific definitions
 %define mod_name mod_fcgid
-%define mod_conf A27_%{mod_name}.conf
-%define mod_so %{mod_name}.so
+%define load_order 227
 
 Summary:	Apache module for FastCGI
 Name:		apache-%{mod_name}
 Version:	2.3.6
-Release:	%mkrel 3
+Release:	4
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.apache.org
 Source0:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-%{version}.tar.gz
 Source1:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-%{version}.tar.gz.asc
-Source2:	%{mod_conf}
+Patch0:		mod_fcgid-2.3.6-CVE-2012-1181.diff
 BuildRequires:	file
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
-Requires(pre):	apache-conf >= 2.2.0
-Requires(pre):	apache >= 2.2.0
-Requires:	apache-conf >= 2.2.0
 Requires:	apache >= 2.2.0
 BuildRequires:	apache-devel >= 2.2.0
 Epoch:		1
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 mod_fcgid is a binary compatibility alternative to Apache module mod_fastcgi.
@@ -33,8 +28,7 @@ as possible.
 %prep
 
 %setup -q -n %{mod_name}-%{version}
-
-cp %{SOURCE2} %{mod_conf}
+%patch0 -p0
 
 # strip away annoying ^M
 find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
@@ -52,37 +46,40 @@ cp fcgid_config.h.in fcgid_config.h
 popd
 
 %install
-rm -rf %{buildroot}
 
-install -d %{buildroot}%{_libdir}/apache-extramodules
+install -d %{buildroot}%{_libdir}/apache
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
 install -d %{buildroot}/var/lib/%{name}
 
-install -m0755 modules/fcgid/.libs/*.so %{buildroot}%{_libdir}/apache-extramodules/
-install -m0644 %{mod_conf} %{buildroot}%{_sysconfdir}/httpd/modules.d/%{mod_conf}
+install -m0755 modules/fcgid/.libs/*.so %{buildroot}%{_libdir}/apache/
+
+install -m0644 %{mod_conf} 
+
+cat > %{buildroot}%{_sysconfdir}/httpd/modules.d/%{load_order}_%{mod_name}.conf << EOF
+LoadModule fcgid_module	%{_libdir}/apache/%{mod_name}.so
+
+#FcgidIPCDir - fastcgi socket file path
+FcgidIPCDir /var/lib/%{name}
+
+# Use FastCGI to process .fcg .fcgi & .fpl scripts
+# Don't do this if mod_fastcgi is present, as it will try to do the same thing
+AddHandler fcgid-script fcg fcgi fpl
+EOF
 
 # fix docs
 cp modules/fcgid/ChangeLog ChangeLog.old
 cp docs/manual/mod/mod_fcgid.html.en mod_fcgid.html
 
 %post
-if [ -f %{_var}/lock/subsys/httpd ]; then
-    %{_initrddir}/httpd restart 1>&2;
-fi
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
 
 %postun
 if [ "$1" = "0" ]; then
-    if [ -f %{_var}/lock/subsys/httpd ]; then
-	%{_initrddir}/httpd restart 1>&2
-    fi
+    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
 fi
 
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc ChangeLog.old *-FCGID mod_fcgid.html
-%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/%{mod_conf}
-%attr(0755,root,root) %{_libdir}/apache-extramodules/%{mod_so}
+%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/*.conf
+%attr(0755,root,root) %{_libdir}/apache-extramodules/*.so
 %attr(0755,apache,apache) %dir /var/lib/%{name}
