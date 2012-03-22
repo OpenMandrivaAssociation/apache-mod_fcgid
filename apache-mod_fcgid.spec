@@ -79,5 +79,5 @@ fi
 %files
 %doc ChangeLog.old *-FCGID mod_fcgid.html
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/*.conf
-%attr(0755,root,root) %{_libdir}/apache-extramodules/*.so
+%attr(0755,root,root) %{_libdir}/apache/*.so
 %attr(0755,apache,apache) %dir /var/lib/%{name}
