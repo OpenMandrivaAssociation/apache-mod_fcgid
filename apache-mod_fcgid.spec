@@ -8,7 +8,7 @@ Version:	2.3.6
 Release:	15
 Group:		System/Servers
 License:	Apache License
-URL:		http://www.apache.org
+URL:		https://www.apache.org
 Source0:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-%{version}.tar.gz
 Source1:	http://httpd.apache.org/dev/dist/mod_fcgid/mod_fcgid-%{version}.tar.gz.asc
 Patch0:		mod_fcgid-2.3.6-CVE-2012-1181.diff
